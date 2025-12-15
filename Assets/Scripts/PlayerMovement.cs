@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
     public ballRoll ballRoller;
     public GameObject ball;
 
+    public Animator animator;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -38,8 +40,14 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 rollPhase = true;
-                ballRoller.LaunchBall();
+                animator.SetTrigger("startRoll");
+
             }
         }
+    }
+
+    public void AnimFinished()
+    {
+        ballRoller.LaunchBall();
     }
 }
