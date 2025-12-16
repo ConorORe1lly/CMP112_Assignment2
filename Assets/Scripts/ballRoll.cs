@@ -52,7 +52,6 @@ public class ballRoll : MonoBehaviour
         //launch the ball in the direction of the projection line
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
-
         Vector3 launchDirection = projection.transform.forward;
         rb.AddForce(launchDirection * launchSpeed);
 

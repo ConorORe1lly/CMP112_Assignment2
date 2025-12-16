@@ -15,7 +15,7 @@ public class scoreSound : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     //these functions are triggered by animation events
