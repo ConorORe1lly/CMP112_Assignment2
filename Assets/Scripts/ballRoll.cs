@@ -6,12 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class ballRoll : MonoBehaviour
 {
-    public float upperRotate;
-    public float lowerRotate;
-    public float launchSpeed;
-    public float rotateSpeed = 1f;
-    public float minLaunchSpeed = 10f;
-    public float maxLaunchSpeed = 20f;
+    [SerializeField] private float upperRotate;
+    [SerializeField] private float lowerRotate;
+    [SerializeField] private float launchSpeed;
+    [SerializeField] private float rotateSpeed = 1f;
+    [SerializeField] private float minLaunchSpeed = 10f;
+    [SerializeField] private float maxLaunchSpeed = 20f;
 
     public GameObject projection; //the red line that projects the roll angle
     public GameObject camera1; //main camera
