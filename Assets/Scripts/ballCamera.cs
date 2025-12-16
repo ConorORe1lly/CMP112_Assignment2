@@ -15,6 +15,7 @@ public class ballCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //camera script to follow the ball when you roll it
         Vector3 position1 = target.position + offset;
         Vector3 position2 = Vector3.Lerp(transform.position, position1, speed * Time.deltaTime);
         transform.position = position2;

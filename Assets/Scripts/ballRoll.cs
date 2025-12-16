@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class ballRoll : MonoBehaviour
 {
@@ -14,7 +15,12 @@ public class ballRoll : MonoBehaviour
     public GameObject camera1; //main camera
     public GameObject ballCamera; //camera that follows the ball
     public GameObject scoreUI;
-    public TextMeshProUGUI scoreText;
+    public GameObject gameoverCanvas;
+
+    public TextMeshProUGUI scoreRound1;
+    public TextMeshProUGUI scoreRound2;
+    public TextMeshProUGUI scoreRound3;
+    public TextMeshProUGUI finalScore;
 
     public PlayerMovement playerMovement;
 
@@ -54,6 +60,7 @@ public class ballRoll : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
+        //loops through each pin to count how many are knocked down
         var pins = FindObjectsByType<pin>(FindObjectsSortMode.None);
         int knockedDown = 0;
         foreach (var pin in pins)
@@ -62,7 +69,37 @@ public class ballRoll : MonoBehaviour
                 knockedDown++;
         }
 
-        scoreText.text = knockedDown.ToString();
+        //round management and score display
+        //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+
+        if (roundManager.Instance.currentRound <= 3)
+        {
+            roundManager.Instance.roundScores[roundManager.Instance.currentRound - 1] = knockedDown;
+        }
+
+        scoreRound1.text = roundManager.Instance.roundScores[0].ToString();
+        scoreRound2.text = roundManager.Instance.roundScores[1].ToString();
+        scoreRound3.text = roundManager.Instance.roundScores[2].ToString();
+
         scoreUI.SetActive(true);
+
+        //goes to next round or ends the game if final round
+        yield return new WaitForSeconds(3f);
+
+        if (roundManager.Instance.currentRound < 3)
+        {
+            roundManager.Instance.currentRound++;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        else
+        {
+            Debug.Log("Game Over");
+            scoreUI.SetActive(false);
+            gameoverCanvas.SetActive(true);
+
+            //calculates score total
+            int totalScore = roundManager.Instance.roundScores[0] + roundManager.Instance.roundScores[1] + roundManager.Instance.roundScores[2];
+            finalScore.text = totalScore.ToString();
+        }
     }
 }
