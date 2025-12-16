@@ -10,6 +10,8 @@ public class ballRoll : MonoBehaviour
     public float lowerRotate;
     public float launchSpeed;
     public float rotateSpeed = 1f;
+    public float minLaunchSpeed = 10f;
+    public float maxLaunchSpeed = 20f;
 
     public GameObject projection; //the red line that projects the roll angle
     public GameObject camera1; //main camera
@@ -41,6 +43,9 @@ public class ballRoll : MonoBehaviour
     public void LaunchBall()
     {
         projection.SetActive(false);
+
+        //randomises the launch speed
+        launchSpeed = Random.Range(minLaunchSpeed, maxLaunchSpeed);
 
         //launch the ball in the direction of the projection line
         Rigidbody rb = GetComponent<Rigidbody>();
@@ -93,13 +98,18 @@ public class ballRoll : MonoBehaviour
         }
         else
         {
-            Debug.Log("Game Over");
             scoreUI.SetActive(false);
             gameoverCanvas.SetActive(true);
 
             //calculates score total
             int totalScore = roundManager.Instance.roundScores[0] + roundManager.Instance.roundScores[1] + roundManager.Instance.roundScores[2];
             finalScore.text = totalScore.ToString();
+
+            //reset score for next game
+            roundManager.Instance.currentRound = 1;
+
+            yield return new WaitForSeconds(5f);
+            SceneManager.LoadScene("Main menu");
         }
     }
 }
