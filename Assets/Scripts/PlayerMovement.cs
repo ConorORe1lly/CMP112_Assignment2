@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     private float ballY;
     private float ballZ;
 
+    public AudioSource swooshSound;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
         {
@@ -66,5 +68,6 @@ public class PlayerMovement : MonoBehaviour
     {
         ballRoller.LaunchBall();
         ballRigidbody.constraints = RigidbodyConstraints.None;
+        swooshSound.Play();
     }
 }

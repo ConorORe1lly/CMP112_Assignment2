@@ -24,6 +24,8 @@ public class ballRoll : MonoBehaviour
     public TextMeshProUGUI scoreRound3;
     public TextMeshProUGUI finalScore;
 
+    public AudioSource scoreBum;
+
     public PlayerMovement playerMovement;
 
     // Update is called once per frame
@@ -74,6 +76,8 @@ public class ballRoll : MonoBehaviour
                 knockedDown++;
         }
 
+        scoreBum.Play();
+
         //round management and score display
         //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
 
@@ -107,8 +111,12 @@ public class ballRoll : MonoBehaviour
 
             //reset score for next game
             roundManager.Instance.currentRound = 1;
+            for (int i = 0; i < roundManager.Instance.roundScores.Length; i++)
+            {
+                roundManager.Instance.roundScores[i] = 0;
+            }
 
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(7f);
             SceneManager.LoadScene("Main menu");
         }
     }
